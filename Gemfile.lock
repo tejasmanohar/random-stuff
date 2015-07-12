@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     builder (3.2.2)
+    crass (1.0.2)
     dotenv (2.0.2)
     google_directions (0.1.6.2)
       nokogiri (>= 1.4.1)
@@ -10,9 +11,15 @@ GEM
     multi_json (1.11.1)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    nokogumbo (1.4.1)
+      nokogiri
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    sanitize (4.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.4.4)
+      nokogumbo (= 1.4.1)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -30,5 +37,6 @@ DEPENDENCIES
   dotenv
   google_directions
   nokogiri
+  sanitize
   sinatra
   twilio-ruby
