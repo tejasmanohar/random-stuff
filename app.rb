@@ -7,19 +7,23 @@ require 'twilio-ruby'
 require 'nokogiri'
 require 'sanitize'
 
-@client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
-
 get '/' do
-  response = GoogleDirections.new("130 brown street waltham", "moes waltham ma")
-  doc = Nokogiri::XML(response.xml)
-  directions = ''
-  doc.xpath('/DirectionsResponse/route/leg/step/html_instructions').each do |step|
-    step = Sanitize.fragment("#{step.content}\n")
-    directions << step
-  end
-  directions
 end
 
 post '/sms' do
-  p params['Body']
+  places = params[:Body].split('to')
+  response = GoogleDirections.new(places.first, places.last)
+  doc = Nokogiri::XML(response.xml)
+  directions = ''
+  doc.xpath('/DirectionsResponse/route/leg/step/html_instructions').each do |step|
+    directions << Sanitize.fragment("#{step.content}\n")
+  end
+  @client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN']
+  @client.messages.create(
+    from: ENV['TWILIO_PHONE_NUMBER'],
+    to: params[:From],
+    body: directions
+  )
+  p directions
+  directions
 end
