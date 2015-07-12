@@ -9,3 +9,7 @@ require 'twilio-ruby'
 get '/' do
   'hello world'
 end
+
+post '/sms' do
+  p params['Body']
+end
