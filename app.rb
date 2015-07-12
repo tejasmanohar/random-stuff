@@ -7,9 +7,6 @@ require 'twilio-ruby'
 require 'nokogiri'
 require 'sanitize'
 
-get '/' do
-end
-
 post '/sms' do
   places = params[:Body].split('to')
   response = GoogleDirections.new(places.first, places.last)
