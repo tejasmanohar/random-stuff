@@ -29,5 +29,6 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   google_directions
+  nokogiri
   sinatra
   twilio-ruby
